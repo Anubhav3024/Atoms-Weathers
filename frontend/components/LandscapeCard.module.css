@@ -1,0 +1,338 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  min-width: 13.75rem;
+  height: 21.875rem;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0.75rem 0.75rem 0px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-0.3125rem);
+}
+
+.landscapeSection {
+  position: relative;
+  width: 100%;
+  height: 50%; /* Adjusted for new layout */
+  overflow: hidden;
+}
+
+/* ... keep sky/sun/moon/hills/ocean/reflection/tree styles as they are ... */
+/* ... but I will use the tool to replace the specific changed sections ... */
+
+.contentSection {
+  width: 100%;
+  height: 50%; /* Increased height for info */
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.25rem;
+  background: white;
+  justify-content: space-between;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.day {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #334155;
+  margin: 0;
+}
+
+.date {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.condition {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #3b82f6; /* Blue-500 */
+  margin-top: 0.25rem;
+  text-transform: capitalize;
+}
+
+.headerRight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bigTemp {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #3b82f6; /* Blue-500 */
+  line-height: 1;
+  margin-top: 0.25rem;
+}
+
+.weatherIcon {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+  color: #f59e0b; /* Amber-500 for sun */
+}
+
+/* Dark mode adjustments for text */
+.dark.card .day {
+  color: #e2e8f0;
+}
+.dark.card .date {
+  color: #94a3b8;
+}
+.dark.card .condition {
+  color: #60a5fa;
+}
+.dark.card .bigTemp {
+  color: #60a5fa;
+}
+.dark.card .contentSection {
+  background: #1e293b;
+}
+
+.separator {
+  width: 100%;
+  height: 1px;
+  background-color: #e2e8f0;
+  margin: 0.5rem 0;
+}
+.dark.card .separator {
+  background-color: #334155;
+}
+
+.metricsGrid {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.metricItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.metricLabel {
+  font-size: 0.6875rem;
+  color: #64748b;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.metricValue {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.dark.card .metricLabel {
+  color: #94a3b8;
+}
+.dark.card .metricValue {
+  color: #f1f5f9;
+}
+
+.light .sky {
+  background: linear-gradient(
+    180deg,
+    #38bdf8 0%,
+    /* Sky Blue */ #7dd3fc 40%,
+    /* Light Blue */ #e0f2fe 100% /* Very Light Blue */
+  );
+}
+
+.dark .sky {
+  background: linear-gradient(
+    180deg,
+    #0f172a 0%,
+    /* Slate 900 */ #1e1b4b 40%,
+    /* Indigo 950 */ #312e81 100% /* Indigo 900 */
+  );
+}
+
+.sun,
+.moon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.8125rem;
+  height: 2.8125rem;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 40%;
+  left: 23%;
+  filter: drop-shadow(0px 0px 0.625rem rgba(255, 255, 255, 0.8));
+  background-color: #fbbf24; /* Amber-400 */
+  box-shadow: 0 0 1.25rem rgba(251, 191, 36, 0.6);
+}
+
+.moon {
+  background-color: transparent;
+  filter: drop-shadow(0px 0px 0.625rem rgba(255, 255, 255, 0.3));
+  box-shadow: none;
+}
+
+.shine1 {
+  position: absolute;
+  width: 134%;
+  height: 134%;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  opacity: 0.3;
+}
+.shine2 {
+  position: absolute;
+  width: 118%;
+  height: 118%;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.realMoon {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #f8fafc;
+  overflow: hidden;
+  box-shadow: 0 0 0.9375rem rgba(255, 255, 255, 0.5);
+}
+.moonShape {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  top: -25%;
+  right: -25%;
+  background-color: #1e1b4b; /* Match dark sky */
+}
+
+.ocean {
+  position: absolute;
+  overflow: hidden;
+  bottom: 0;
+  width: 100%;
+  height: 28%;
+}
+
+.light .ocean {
+  background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 100%);
+  opacity: 0.8;
+}
+
+.dark .ocean {
+  background: linear-gradient(180deg, #1e1b4b 0%, #312e81 100%);
+  opacity: 0.9;
+}
+
+.reflection {
+  position: absolute;
+  background-color: white;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.hill {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.light .hill1 {
+  background-color: #22c55e; /* Green-500 */
+  right: -25%;
+  bottom: 20%;
+  width: 9.375rem;
+  height: 2.5rem;
+}
+.light .hill2 {
+  background-color: #16a34a; /* Green-600 */
+  right: -36%;
+  bottom: 10%;
+  width: 9.375rem;
+  height: 5rem;
+}
+.light .hill3 {
+  background-color: #15803d; /* Green-700 */
+  left: -100%;
+  bottom: -28%;
+  width: 21.875rem;
+  height: 9.375rem;
+  z-index: 3;
+}
+.light .hill4 {
+  background-color: #14532d; /* Green-900 */
+  right: -100%;
+  bottom: -40%;
+  width: 21.875rem;
+  height: 9.375rem;
+  z-index: 3;
+}
+
+.dark .hill1 {
+  background-color: #334155; /* Slate-700 */
+  right: -25%;
+  bottom: 20%;
+  width: 9.375rem;
+  height: 2.5rem;
+}
+.dark .hill2 {
+  background-color: #1e293b; /* Slate-800 */
+  right: -36%;
+  bottom: 10%;
+  width: 9.375rem;
+  height: 5rem;
+}
+.dark .hill3 {
+  background-color: #0f172a; /* Slate-900 */
+  left: -100%;
+  bottom: -30%;
+  width: 21.875rem;
+  height: 9.375rem;
+  z-index: 3;
+}
+.dark .hill4 {
+  background-color: #020617; /* Slate-950 */
+  right: -100%;
+  bottom: -40%;
+  width: 21.875rem;
+  height: 9.375rem;
+  z-index: 3;
+}
+
+.tree {
+  position: absolute;
+  z-index: 3;
+}
+
+.filter {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0) 40%
+  );
+  z-index: 5;
+  opacity: 0.2;
+}
+
+/* Removed old weatherInfo, temp, meta, forecast styles as they are replaced by new layout */

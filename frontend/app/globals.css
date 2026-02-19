@@ -1,0 +1,194 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+/* ========== DESIGN TOKENS ========== */
+:root {
+  /* LIGHT MODE - "SkyFlow Day" */
+  --bg-primary: #ffffff; /* Pure White */
+  --bg-sidebar: #e0f2fe; /* Sky-100 */
+  --bg-card: #f8fafc; /* Slate-50 (Very Light Gray) */
+  --text-primary: #0f172a; /* Slate-900 */
+  --text-secondary: #334155; /* Slate-700 */
+  --text-muted: #64748b; /* Slate-500 */
+  --accent: #0284c7; /* Sky-600 */
+  --accent-light: #38bdf8; /* Sky-400 */
+  --accent-glow: rgba(2, 132, 199, 0.25);
+  --border: #bae6fd; /* Sky-200 */
+  --shadow-sm: 0 1px 3px rgba(14, 165, 233, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(14, 165, 233, 0.15);
+  --shadow-lg: 0 10px 15px -3px rgba(14, 165, 233, 0.2);
+  --glass-blur: 16px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark {
+  /* DARK MODE - "SkyFlow Night" */
+  --bg-primary: #020617; /* Slate-950 (Deepest Night) */
+  --bg-sidebar: #0f172a; /* Slate-900 (Deep Navy) */
+  --bg-card: #1e293b; /* Slate-800 */
+  --text-primary: #f0f9ff; /* Sky-50 */
+  --text-secondary: #bae6fd; /* Sky-200 */
+  --text-muted: #7dd3fc; /* Sky-300 */
+  --accent: #0ea5e9; /* Sky-500 */
+  --accent-light: #38bdf8; /* Sky-400 */
+  --accent-glow: rgba(14, 165, 233, 0.25);
+  --border: #1e293b;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+/* ========== TAILWIND THEME EXTENSION ========== */
+@theme inline {
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-card: var(--bg-card);
+  --color-bg-sidebar: var(--bg-sidebar);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-glow: var(--accent-glow);
+  --color-border: var(--border);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ========== GLOBAL RESETS ========== */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  transition:
+    background 0.5s ease,
+    color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========== GLASS CARD ========== */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid #e2e8f0; /* Slate-200 */
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.glass-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 100px;
+}
+/* ========== SCROLLBAR UTILITIES ========== */
+.scrollbar-none {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* ========== CUSTOM SCROLLBAR (Visible) ========== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--accent-glow);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px var(--accent-glow);
+  }
+}
+
+@keyframes gradient-x {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 15s ease infinite;
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--border);
+  border-radius: var(--radius);
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.06),
+    transparent
+  );
+  animation: shimmer 1.8s infinite;
+}
+
+/* ========== LEAFLET OVERRIDES ========== */
+.leaflet-container {
+  z-index: 10;
+  border-radius: var(--radius);
+}
