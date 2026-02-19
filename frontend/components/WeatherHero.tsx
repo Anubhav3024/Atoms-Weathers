@@ -19,12 +19,12 @@ import {
   getWindDirection,
   formatDate,
 } from "@/services/utils";
-import { addFavorite, removeFavorite } from "@/services/api";
+// import { addFavorite, removeFavorite } from "@/services/api";
 import AlertModal from "./AlertModal";
 import WeatherIcon from "./WeatherIcon";
 
 export default function WeatherHero() {
-  const { current, units, user, token, setFavorites } = useWeatherStore();
+  const { current, units, user, token, toggleFavorite } = useWeatherStore();
   const [showAlertModal, setShowAlertModal] = useState(false);
 
   if (!current) return null;
@@ -42,38 +42,11 @@ export default function WeatherHero() {
 
   const handleToggleFavorite = async () => {
     if (!user) {
-      // Maybe show auth modal? For now just return or alert.
       alert("Please login to save favorites.");
       return;
     }
-
-    // If we have a store action for this, use it.
-    // But since I didn't verify the store implementation of toggleFavorite fully,
-    // I will stick to the working local implementation from before.
     if (!token) return;
-
-    try {
-      let updatedFavorites;
-      if (isFavorite) {
-        const res = await removeFavorite(token, current.name);
-        updatedFavorites = res.data.favorites;
-      } else {
-        const res = await addFavorite(token, current.name);
-        updatedFavorites = res.data.favorites;
-      }
-      setFavorites(updatedFavorites);
-
-      // Update local storage user object to keep it in sync
-      localStorage.setItem(
-        "ws-user",
-        JSON.stringify({
-          ...user,
-          favorites: updatedFavorites,
-        }),
-      );
-    } catch (err) {
-      console.error("Failed to toggle favorite", err);
-    }
+    toggleFavorite(current.name);
   };
 
   const dateStr = new Date(current.dt * 1000).toLocaleDateString("en-US", {

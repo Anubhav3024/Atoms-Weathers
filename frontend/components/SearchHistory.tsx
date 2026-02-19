@@ -45,7 +45,7 @@ export default function SearchHistory({
           <ul className="divide-y divide-white/5">
             {searchHistory.map((item) => (
               <li
-                key={item.id}
+                key={item.city + item.timestamp}
                 className="flex items-center justify-between p-3 hover:bg-white/5 transition-colors group"
               >
                 <button
@@ -67,7 +67,7 @@ export default function SearchHistory({
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    removeFromHistory(item.id);
+                    removeFromHistory(item.city);
                   }}
                   className="p-1.5 rounded-full hover:bg-red-500/20 text-text-muted hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
                   title="Remove from history"
