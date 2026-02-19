@@ -72,9 +72,11 @@ function App() {
     const isFav = favorites.includes(targetCity);
     try {
       const method = isFav ? "delete" : "post";
+      const BASE_API =
+        import.meta.env.VITE_API_URL || "http://localhost:5000/api";
       const res = await axios({
         method,
-        url: "http://localhost:5000/api/favorites",
+        url: `${BASE_API}/favorites`,
         data: { token, city: targetCity },
       });
       setFavorites(res.data.favorites);
@@ -101,7 +103,8 @@ function App() {
     document.body.classList.add("loading-blur");
 
     try {
-      const BASE_URL = "http://localhost:5000/api";
+      const BASE_URL =
+        import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
       const [currentRes, forecastRes] = await Promise.all([
         axios.get(
