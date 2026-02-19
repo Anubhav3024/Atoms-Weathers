@@ -30,11 +30,16 @@ if (
 ) {
   mongoose
     .connect(process.env.MONGODB_URI)
-    .then(() => console.log("Connected to MongoDB"))
-    .catch((err) => console.error("MongoDB connection error:", err));
+    .then(() => console.log("✅ Successfully connected to MongoDB Atlas"))
+    .catch((err) => {
+      console.error("❌ MongoDB connection error:", err.message);
+      console.log(
+        "Check if your IP is whitelisted in MongoDB Atlas (0.0.0.0/0)",
+      );
+    });
 } else {
   console.log(
-    "MONGODB_URI not found or using placeholder. Running without persistent database.",
+    "⚠️ MONGODB_URI not found or using placeholder. Running without a real database.",
   );
 }
 
